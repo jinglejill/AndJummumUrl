@@ -17,6 +17,7 @@
 		EF9C5C9721114DC200C7563A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C5C9621114DC200C7563A /* main.m */; };
 		EF9C5CA121114DC300C7563A /* AndJummumUrlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C5CA021114DC300C7563A /* AndJummumUrlTests.m */; };
 		EF9C5CAC21114DC300C7563A /* AndJummumUrlUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EF9C5CAB21114DC300C7563A /* AndJummumUrlUITests.m */; };
+		EF9C5D0221116FF700C7563A /* AndJummum Url in Resources */ = {isa = PBXBuildFile; fileRef = EF9C5D0121116FF700C7563A /* AndJummum Url */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		EF9C5CA721114DC300C7563A /* AndJummumUrlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AndJummumUrlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9C5CAB21114DC300C7563A /* AndJummumUrlUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AndJummumUrlUITests.m; sourceTree = "<group>"; };
 		EF9C5CAD21114DC300C7563A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF9C5D0121116FF700C7563A /* AndJummum Url */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "AndJummum Url"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		EF9C5C7521114DC000C7563A = {
 			isa = PBXGroup;
 			children = (
+				EF9C5D0121116FF700C7563A /* AndJummum Url */,
 				EF9C5C8021114DC000C7563A /* AndJummumUrl */,
 				EF9C5C9F21114DC300C7563A /* AndJummumUrlTests */,
 				EF9C5CAA21114DC300C7563A /* AndJummumUrlUITests */,
@@ -247,6 +250,7 @@
 			files = (
 				EF9C5C9421114DC200C7563A /* LaunchScreen.storyboard in Resources */,
 				EF9C5C9121114DC200C7563A /* Assets.xcassets in Resources */,
+				EF9C5D0221116FF700C7563A /* AndJummum Url in Resources */,
 				EF9C5C8F21114DC100C7563A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
