@@ -1,11 +1,17 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbNameBranch"]);
+    setConnectionValue($jummumOM);
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
-    $dbNameBranch = $_POST["dbNameBranch"];
-
+    
+    
+    if(isset($_POST["branchID"]))
+    {
+        $branchID = $_POST["branchID"];
+    }
+    
+    
     
     // Check connection
     if (mysqli_connect_errno())
@@ -14,12 +20,15 @@
     }
     
     
-    $sql = "select * from AND_JUMMUM_OM.branch where DbName = '$dbNameBranch'";
-    $selectedRow = getSelectedRow($sql);
-    $branchID = $selectedRow[0]["BranchID"];
-    $sql = "select '$branchID' BranchID, customerTable.* from customerTable where Status = 1;";
-    writeToLog("sql = " . $sql);
     
+    
+    //select table -> branch, customerTable
+    $sql = "SELECT * FROM $jummumOM.Branch where branchID = '$branchID';";
+    $selectedRow = getSelectedRow($sql);
+    $dbName = $selectedRow[0]["DbName"];
+    
+    $sql = "select $branchID BranchID, $dbName.CustomerTable.* from $dbName.CustomerTable where status = 1";
+
     
     
     /* execute multi query */

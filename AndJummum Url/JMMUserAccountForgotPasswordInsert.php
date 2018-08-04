@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     
@@ -39,7 +39,7 @@
         $requestDate = date('Y-m-d H:i:s', time());
         $randomString = generateRandomString();
         $codeReset = password_hash($username . $requestDate . $randomString, PASSWORD_DEFAULT);//
-        $emailBody = file_get_contents('./htmlEmailTemplateForgotPassword.html');
+        $emailBody = file_get_contents('./htmlEmailTemplateForgotPassword.php');
         $emailBody = str_replace("#codereset#",$codeReset,$emailBody);
         
         
@@ -50,7 +50,7 @@
         if($ret != "")
         {
             mysqli_rollback($con);
-            putAlertToDevice();
+//            putAlertToDevice();
             echo json_encode($ret);
             exit();
         }

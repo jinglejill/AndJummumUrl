@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     
@@ -38,7 +38,7 @@
     if($ret != "")
     {
         mysqli_rollback($con);
-        putAlertToDevice();
+//        putAlertToDevice();
         echo json_encode($ret);
         exit();
     }
@@ -47,9 +47,7 @@
     
     
     //do script successful
-    //delete and insert ตัวเอง, insert คนอื่น สำหรับกรณี sync ให้ข้อมูล update เหมือนกันหมด
     mysqli_commit($con);
-//    sendPushNotificationToAllDevices($_POST["modifiedDeviceToken"]);
     mysqli_close($con);
     
     

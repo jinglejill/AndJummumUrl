@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue("AND_JUMMUM_OM");
+    setConnectionValue($jummumOM);
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_GET["modifiedUser"]);
     printAllPost();
     
@@ -45,9 +45,7 @@
     
     
     //do script successful
-    //delete and insert ตัวเอง, insert คนอื่น สำหรับกรณี sync ให้ข้อมูล update เหมือนกันหมด
     mysqli_commit($con);
-//    sendPushNotificationToAllDevices($_GET["modifiedDeviceToken"]);
     mysqli_close($con);
     
     

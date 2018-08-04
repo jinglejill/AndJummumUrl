@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     
@@ -66,7 +66,7 @@
         if($ret != "")
         {
             mysqli_rollback($con);
-            putAlertToDevice();
+//            putAlertToDevice();
             echo json_encode($ret);
             exit();
         }

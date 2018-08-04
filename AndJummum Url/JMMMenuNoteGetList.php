@@ -1,16 +1,16 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbNameBranch"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
-    $dbNameBranch = $_POST["dbNameBranch"];
     
     
     
-    if(isset($_POST["menuID"]))
+    if(isset($_POST["menuID"]) && isset($_POST["branchID"]))
     {
         $menuID = $_POST["menuID"];
+        $branchID = $_POST["branchID"];
     }
     
     
@@ -26,19 +26,19 @@
     
     
     //check if use mainBranch menu or own menu
-    $sql = "select * from AND_JUMMUM_OM.branch where dbName = '$dbNameBranch'";
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
     $selectedRow = getSelectedRow($sql);
+    $dbName = $selectedRow[0]["DbName"];
     if($selectedRow[0]["BranchID"] != $selectedRow[0]["MainBranchID"])
     {
         $mainBranchID = $selectedRow[0]["MainBranchID"];
-        $sql = "select * from AND_JUMMUM_OM.branch where branchID = '$mainBranchID'";
+        $sql = "select * from $jummumOM.branch where branchID = '$mainBranchID'";
         $selectedRow = getSelectedRow($sql);
-        $dbNameBranch = $selectedRow[0]["DbName"];
+        $dbName = $selectedRow[0]["DbName"];
     }
     
-    
-//    $sql = "select 1, menuNote.* from menuNote where 1 union select 2, menuNote.* from menuNote where 1 union select 3, menuNote.* from menuNote where 1 union select 4, menuNote.* from menuNote where 1 union select 5, menuNote.* from menuNote where 1;";
-    $sql = "select * from $dbNameBranch.menuNote where menuID = '$menuID';";
+
+    $sql = "select '$branchID' BranchID, $dbName.menuNote.* from $dbName.menuNote where menuID = '$menuID';";
     
     
     

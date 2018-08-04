@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     
@@ -125,7 +125,7 @@
     
     
     //validate shop opening time*******************
-    $sql = "select * from AND_JUMMUM_OM.branch where branchID = '$branchID'";
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
     $selectedRow = getSelectedRow($sql);
     $selectedDbName = $selectedRow[0]["DbName"];
     
@@ -252,7 +252,7 @@
         if($ret != "")
         {
             mysqli_rollback($con);
-            putAlertToDevice();
+//            putAlertToDevice();
             echo json_encode($ret);
             exit();
         }
@@ -278,7 +278,7 @@
         if($ret != "")
         {
             mysqli_rollback($con);
-            putAlertToDevice();
+//            putAlertToDevice();
             echo json_encode($ret);
             exit();
         }
@@ -303,7 +303,7 @@
                 if($ret != "")
                 {
                     mysqli_rollback($con);
-                    putAlertToDevice();
+//                    putAlertToDevice();
                     echo json_encode($ret);
                     exit();
                 }
@@ -349,7 +349,7 @@
                 if($ret != "")
                 {
                     mysqli_rollback($con);
-                    putAlertToDevice();
+//                    putAlertToDevice();
                     echo json_encode($ret);
                     exit();
                 }
@@ -395,7 +395,7 @@
                 if($ret != "")
                 {
                     mysqli_rollback($con);
-                    putAlertToDevice();
+//                    putAlertToDevice();
                     echo json_encode($ret);
                     exit();
                 }
@@ -412,7 +412,7 @@
                 if($ret != "")
                 {
                     mysqli_rollback($con);
-                    putAlertToDevice();
+//                    putAlertToDevice();
                     echo json_encode($ret);
                     exit();
                 }
@@ -425,7 +425,7 @@
                 if($ret != "")
                 {
                     mysqli_rollback($con);
-                    putAlertToDevice();
+//                    putAlertToDevice();
                     echo json_encode($ret);
                     exit();
                 }
@@ -453,7 +453,7 @@
             if($ret != "")
             {
                 mysqli_rollback($con);
-                putAlertToDevice();
+//                putAlertToDevice();
                 echo json_encode($ret);
                 exit();
             }
@@ -467,9 +467,9 @@
         
         //insert into pushsync of db branchID
         //-----****************************
-        //get pushSync Device in AND_JUMMUM_OM
+        //get pushSync Device in JUMMUM OM
         $pushSyncDeviceTokenReceiveOrder = array();
-        $sql = "select * from AND_JUMMUM_OM.device left join AND_JUMMUM_OM.Branch on AND_JUMMUM_OM.device.DbName = AND_JUMMUM_OM.Branch.DbName where branchID = '$branchID';";
+        $sql = "select * from $jummumOM.device left join $jummumOM.Branch on $jummumOM.device.DbName = $jummumOM.Branch.DbName where branchID = '$branchID';";
         $selectedRow = getSelectedRow($sql);
         for($i=0; $i<sizeof($selectedRow); $i++)
         {
@@ -496,14 +496,14 @@
         
         //do script successful
         mysqli_commit($con);
-        sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,'./../AND_JUMMUM_OM/','jill',$msg,$receiptID,'printKitchenBill',1);
+        sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,"./../$jummumOM/",'jill',$msg,$receiptID,'printKitchenBill',1);
         //****************send noti to shop (turn on light)
 //        if($alarmShop == 1)
         {
             //alarmShop
             //query statement
             $ledStatus = 1;
-            $sql = "update AND_JUMMUM_OM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
+            $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
             $ret = doQueryTask($sql);
             if($ret != "")
             {

@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
@@ -47,7 +47,7 @@
     {
         $menuID = $selectedRow[0]["MenuID"];
         $branchID = $selectedRow[0]["BranchID"];
-        $sql2 = "select * from AND_JUMMUM_OM.branch where branchID = '$branchID'";
+        $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
         $selectedRow2 = getSelectedRow($sql2);
         $eachDbName = $selectedRow2[0]["DbName"];
         $sql4 = "select '$branchID' BranchID, Menu.* from $eachDbName.Menu where menuID = '$menuID'";
@@ -55,7 +55,7 @@
         {
             $menuID = $selectedRow[$i]["MenuID"];
             $branchID = $selectedRow[$i]["BranchID"];
-            $sql2 = "select * from AND_JUMMUM_OM.branch where branchID = '$branchID'";
+            $sql2 = "select * from $jummumOM.branch where branchID = '$branchID'";
             $selectedRow2 = getSelectedRow($sql2);
             $eachDbName = $selectedRow2[0]["DbName"];
             $sql4 .= " union select '$branchID' BranchID, Menu.* from $eachDbName.Menu where menuID = '$menuID'";

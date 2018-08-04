@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue("AND_JUMMUM_OM");
+    setConnectionValue($jummumOM);
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
@@ -8,7 +8,7 @@
     
     if(isset($_POST["modifiedDate"]))
     {
-        $modifiedDate = $_POST["modifiedDate"]);
+        $modifiedDate = $_POST["modifiedDate"];
     }
     
     
@@ -21,7 +21,7 @@
     
     
     //select table -> branch, customerTable
-    $sql = "SELECT * FROM AND_JUMMUM_OM.Branch where status = 1 and customerApp = 1 and modifiedDate > $modifiedDate;";
+    $sql = "SELECT * FROM $jummumOM.Branch where status = 1 and customerApp = 1 and modifiedDate > '$modifiedDate';";
 
     
 

@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     
@@ -90,9 +90,9 @@
     
     
     
-    //get pushSync Device in AND_JUMMUM_OM
+    //get pushSync Device in JUMMUM OM
     $pushSyncDeviceTokenReceiveOrder = array();
-    $sql = "select * from AND_JUMMUM_OM.device left join AND_JUMMUM_OM.Branch on AND_JUMMUM_OM.device.DbName = AND_JUMMUM_OM.Branch.DbName where branchID = '$branchID';";
+    $sql = "select * from $jummumOM.device left join $jummumOM.Branch on $jummumOM.device.DbName = $jummumOM.Branch.DbName where branchID = '$branchID';";
     $selectedRow = getSelectedRow($sql);
     for($i=0; $i<sizeof($selectedRow); $i++)
     {
@@ -119,12 +119,12 @@
     if($type == 2)
     {
         $msg = "Open dispute request";
-        sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,'./../AND_JUMMUM_OM/','jill',$msg,$receiptID,'cancelOrder',1);
+        sendPushNotificationToDeviceWithPath($pushSyncDeviceTokenReceiveOrder,"./../$jummumOM/",'jill',$msg,$receiptID,'cancelOrder',1);
         //****************send noti to shop (turn on light)
         //alarmShop
         //query statement
         $ledStatus = 1;
-        $sql = "update AND_JUMMUM_OM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
+        $sql = "update $jummumOM.Branch set LedStatus = '$ledStatus', ModifiedUser = '$modifiedUser', ModifiedDate = '$modifiedDate' where branchID = '$branchID';";
         $ret = doQueryTask($sql);
         if($ret != "")
         {

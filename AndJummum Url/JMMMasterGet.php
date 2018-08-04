@@ -1,7 +1,6 @@
 <?php
     include_once("dbConnect.php");
-//    setConnectionValue($_POST["dbName"]);
-    setConnectionValue("AND_JUMMUM_OM");
+    setConnectionValue($jummumOM);
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
@@ -15,31 +14,31 @@
     }
     
     
-    //select table -> branch, customerTable
-    $sql = "SELECT * FROM AND_JUMMUM_OM.Branch where status = 1 and customerApp = 1;";
-
-    
-
-    //build sql statement for table
-    $selectedRow = getSelectedRow($sql);
-    if(sizeof($selectedRow)>0)
-    {
-        $eachDbName = $selectedRow[0]["DbName"];        
-        $branchID = $selectedRow[0]["BranchID"];
-        $sqlCustomerTable = "select $branchID as BranchID, $eachDbName.CustomerTable.* from $eachDbName.CustomerTable";
-        for($i=1; $i<sizeof($selectedRow); $i++)
-        {
-            $eachDbName = $selectedRow[$i]["DbName"];
-            $branchID = $selectedRow[$i]["BranchID"];
-            $sqlCustomerTable .= " union select $branchID as BranchID , $eachDbName.CustomerTable.* from $eachDbName.CustomerTable";
-        }
-    }
-    else
-    {
-        $sqlCustomerTable = "select * from CustomerTable where 0";
-    }
-    $sql .= $sqlCustomerTable . ";";
-    $sql .= "select * from AND_JUMMUM.setting;";
+//    //select table -> branch, customerTable
+//    $sql = "SELECT * FROM $jummumOM.Branch where status = 1 and customerApp = 1;";
+//
+//
+//
+//    //build sql statement for table
+//    $selectedRow = getSelectedRow($sql);
+//    if(sizeof($selectedRow)>0)
+//    {
+//        $eachDbName = $selectedRow[0]["DbName"];
+//        $branchID = $selectedRow[0]["BranchID"];
+//        $sqlCustomerTable = "select $branchID as BranchID, $eachDbName.CustomerTable.* from $eachDbName.CustomerTable";
+//        for($i=1; $i<sizeof($selectedRow); $i++)
+//        {
+//            $eachDbName = $selectedRow[$i]["DbName"];
+//            $branchID = $selectedRow[$i]["BranchID"];
+//            $sqlCustomerTable .= " union select $branchID as BranchID , $eachDbName.CustomerTable.* from $eachDbName.CustomerTable";
+//        }
+//    }
+//    else
+//    {
+//        $sqlCustomerTable = "select * from CustomerTable where 0";
+//    }
+//    $sql .= $sqlCustomerTable . ";";
+    $sql = "select * from $jummum.setting where type != 4;";
     
     
     

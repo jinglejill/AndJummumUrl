@@ -1,6 +1,6 @@
 <?php
     include_once('dbConnect.php');
-    setConnectionValue("AND_JUMMUM");
+    setConnectionValue($jummum);
     $arrBody = array(
                      'alert' => 'test'//ข้อความ
                       ,'sound' => 'default'//,//เสียงแจ้งเตือน

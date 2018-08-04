@@ -1,10 +1,16 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbNameBranch"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
-    $dbNameBranch = $_POST["dbNameBranch"];
+    
+    
+    
+    if(isset($_POST["branchID"]))
+    {
+        $branchID = $_POST["branchID"];
+    }
     
     
     // Check connection
@@ -14,10 +20,13 @@
     }
     
     
+    $sql = "select * from $jummumOM.branch where BranchID = '$branchID'";
+    $selectedRow = getSelectedRow($sql);
+    $dbName = $selectedRow[0]["DbName"];
     
     
     //get customer order status from branch
-    $sql = "select * from $dbNameBranch.Setting where keyName = 'customerOrderStatus'";
+    $sql = "select * from $dbName.Setting where keyName = 'customerOrderStatus'";
     $selectedRow = getSelectedRow($sql);
     $customerOrderStatus = $selectedRow[0]["Value"];
     
@@ -37,7 +46,7 @@
         $strDate = date("Y-m-d");
         $currentDate = date("Y-m-d H:i:s");
         $dayOfWeek = date('w', strtotime($strDate));
-        $sql = "select * from $dbNameBranch.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
+        $sql = "select * from $dbName.OpeningTime where day = '$dayOfWeek' order by day,shiftNo";
         $selectedRow = getSelectedRow($sql);
         
         for($i=0; $i<sizeof($selectedRow); $i++)
@@ -77,14 +86,14 @@
     
     
     //check if use mainBranch menu or own menu
-    $sql = "select * from AND_JUMMUM_OM.branch where dbName = '$dbNameBranch'";
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
     $selectedRow = getSelectedRow($sql);
     if($selectedRow[0]["BranchID"] != $selectedRow[0]["MainBranchID"])
     {
         $mainBranchID = $selectedRow[0]["MainBranchID"];
-        $sql = "select * from AND_JUMMUM_OM.branch where branchID = '$mainBranchID'";
+        $sql = "select * from $jummumOM.branch where branchID = '$mainBranchID'";
         $selectedRow = getSelectedRow($sql);
-        $dbNameBranch = $selectedRow[0]["DbName"];
+        $dbName = $selectedRow[0]["DbName"];
     }
     
     
@@ -99,13 +108,13 @@
     {
         $sql = "select 0 as Text;";
     }
-    $sql .= "select * from $dbNameBranch.menu where Status = 1;";
-    $sql .= "select * from $dbNameBranch.menuType where Status = 1;";
-    $sql .= "select * from $dbNameBranch.menuNote where 0;";
-    $sql .= "select * from $dbNameBranch.note where Status = 1;";
-    $sql .= "select * from $dbNameBranch.notetype where Status = 1;";
-    $sql .= "select * from $dbNameBranch.subMenuType where Status = 1;";
-    $sql .= "select * from $dbNameBranch.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');";
+    $sql .= "select '$branchID' BranchID, $dbName.menu.* from $dbName.menu where Status = 1;";
+    $sql .= "select '$branchID' BranchID, $dbName.menuType.* from $dbName.menuType where Status = 1;";
+//    $sql .= "select '$branchID' BranchID, $dbName.menuNote.* from $dbName.menuNote where 0;";
+    $sql .= "select '$branchID' BranchID, $dbName.note.* from $dbName.note where Status = 1;";
+    $sql .= "select '$branchID' BranchID, '$branchID' BranchID, $dbName.notetype.* from $dbName.notetype where Status = 1;";
+//    $sql .= "select '$branchID' BranchID, $dbName.subMenuType.* from $dbName.subMenuType where Status = 1;";
+    $sql .= "select '$branchID' BranchID, $dbName.specialPriceProgram.* from $dbName.specialPriceProgram where date_format(now(),'%Y-%m-%d') between date_format(startDate,'%Y-%m-%d') and date_format(endDate,'%Y-%m-%d');";
     writeToLog("sql = " . $sql);
     
     

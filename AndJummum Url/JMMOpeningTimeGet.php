@@ -1,6 +1,6 @@
 <?php
     include_once("dbConnect.php");
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
@@ -23,7 +23,7 @@
     
     
     
-    $sql = "select * from AND_JUMMUM_OM.branch where branchID = '$branchID'";
+    $sql = "select * from $jummumOM.branch where branchID = '$branchID'";
     $selectedRow = getSelectedRow($sql);
     $selectedDbName = $selectedRow[0]["DbName"];
     

@@ -91,7 +91,7 @@
         
 
         $code .= tab() . 'include_once("dbConnect.php");<br>';
-        $code .= tab() . 'setConnectionValue($_POST["dbName"]);<br>';
+        $code .= tab() . 'setConnectionValue("");<br>';
         $code .= tab() . 'writeToLog("file: " . basename(__FILE__) . ", user: " .  $_POST["modifiedUser"]);<br>';        
         $code .= tab() . 'printAllPost();<br>';
         $code .= '<br><br><br>';

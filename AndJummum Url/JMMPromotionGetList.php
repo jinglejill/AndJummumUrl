@@ -1,14 +1,6 @@
 <?php
     include_once("dbConnect.php");
-//    if(!isset($_POST["dbName"]))
-//    {
-//        $_POST["dbName"] = $_GET["dbName"];
-//        $_POST["voucherCode"] = $_GET["voucherCode"];
-//        $_POST["userAccountID"] = $_GET["userAccountID"];
-//        $_POST["branchID"] = $_GET["branchID"];
-//        $_POST["totalAmount"] = $_GET["totalAmount"];
-//    }
-    setConnectionValue($_POST["dbName"]);
+    setConnectionValue("");
     writeToLog("file: " . basename(__FILE__) . ", user: " . $_POST["modifiedUser"]);
     printAllPost();
     ini_set("memory_limit","-1");
